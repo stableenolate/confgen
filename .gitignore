@@ -1,0 +1,11 @@
+qm9/
+__pycache__/
+*.zip
+*.sh
+*v*.py
+*test*.py
+.vscode/
+*.pyc
+.env
+what.py
+find.py

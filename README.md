@@ -24,13 +24,14 @@ Notes:
 
 Molecular graph file must be a txt file containing a graph for one molecule (1 file for 1 graph)
 format:
-<NUM_ATOMS>
-<ATOM_SYMBOL> <HYBRIDIZATION> <AROMATICITY> <DEGREE> <VALENCE>
-...
-<ATOM_SYMBOL> <HYBRIDIZATION> <AROMATICITY> <DEGREE> <VALENCE>
-<ATOM_IDX> <ATOM_IDX> <BOND_ORDER> <AROMATICITY>
-...
-<ATOM_IDX> <ATOM_IDX> <BOND_ORDER> <AROMATICITY>
+
+<NUM_ATOMS><br />
+<ATOM_SYMBOL> <HYBRIDIZATION> <AROMATICITY> <DEGREE> <VALENCE><br />
+...<br />
+<ATOM_SYMBOL> <HYBRIDIZATION> <AROMATICITY> <DEGREE> <VALENCE><br />
+<ATOM_IDX> <ATOM_IDX> <BOND_ORDER> <AROMATICITY><br />
+...<br />
+<ATOM_IDX> <ATOM_IDX> <BOND_ORDER> <AROMATICITY><br />
 
 Notes:
 1. Atom symbol must be uppercase
@@ -41,14 +42,15 @@ Notes:
 6. Bond order is an integer. For aromatic molecules, find a resonance form you like and go with it.
 7. Yes hand-jamming sucks but this was never meant to be practical.
 
-Example:
-5
-C 3 0 4 4
-H 1 0 1 1
-H 1 0 1 1
-H 1 0 1 1
-H 1 0 1 1
-0 1 1 0
-0 2 1 0
-0 3 1 0
-0 4 1 0
+Example: Methane
+
+5<br />
+C 3 0 4 4<br />
+H 1 0 1 1<br />
+H 1 0 1 1<br />
+H 1 0 1 1<br />
+H 1 0 1 1<br />
+0 1 1 0<br />
+0 2 1 0<br />
+0 3 1 0<br />
+0 4 1 0<br />

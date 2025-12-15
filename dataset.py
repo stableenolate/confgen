@@ -246,11 +246,11 @@ dataset = QM9Dataset(dir='qm9/copy3')
 loader = DataLoader(dataset, batch_size=1, shuffle=True, collate_fn=collate_fn)
 max_bonds = dict()
 
-print("Fully loaded") """
+print("Fully loaded")
 
-""" for batch in loader:
-    edge_feat = batch['edge_feat'].squeeze() #[V,V,2]
-    order = (edge_feat[:, :, 0] > 0).float() #[V,V]
+for batch in loader:
+    edge_attr = batch['edge_attr'].squeeze() #[V,V,2]
+    order = (edge_attr[:, :, 0] > 0).float() #[V,V]
     bonds = order.sum().item()
 
     if bonds not in max_bonds:
@@ -258,8 +258,8 @@ print("Fully loaded") """
     else:
         max_bonds[bonds] += 1
 
-print(max_bonds) """
-""" 
+print(max_bonds)
+
 batch = next(iter(loader))
 
 torch.set_printoptions(linewidth=200)

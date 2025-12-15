@@ -302,17 +302,17 @@ def main():
             torch.save(model_ema.state_dict(), 'outputs/%s/model_ema_%d.pth' % (exp_name, epoch))
 
         if epoch % test_epoch == 0:
-
             model_ema.eval()
             rma_estimator.eval()
-            with torch.no_grad():
-                nll_epoch_val = 0
-                rma_epoch_val = 0
-                n_samples_val = 0
-                nll_epoch_test = 0
-                rma_epoch_test = 0
-                n_samples_test = 0
 
+            nll_epoch_val = 0
+            rma_epoch_val = 0
+            n_samples_val = 0
+            nll_epoch_test = 0
+            rma_epoch_test = 0
+            n_samples_test = 0
+
+            with torch.no_grad():
                 for batch in loader['val']:
                     x = batch['x'].to(device)
                     node_attr = batch['node_attr'].to(device)
@@ -361,7 +361,7 @@ def main():
 
                     nll_epoch_test += nll.item() * num_samples
                     n_samples_test += num_samples
-
+                    
             avg_nll_test = nll_epoch_test / n_samples_test
             avg_rma_test = rma_epoch_test / n_samples_test
             avg_nll_val = nll_epoch_val / n_samples_val

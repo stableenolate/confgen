@@ -1,5 +1,6 @@
 qm9/
 __pycache__/
+outputs/
 *.zip
 *.sh
 *v*.py

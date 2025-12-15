@@ -186,7 +186,7 @@ def write_xyz(x: torch.Tensor, node_attr: torch.Tensor, node_mask: torch.Tensor,
             print(f'{file_name} is invalid!')
 
     print("All molecules written")
-    print(f'Validity: {valid_mol_cnt}/{batch_size}')
+    print(f'Validity: {valid_mol_cnt}/{batch_size}') #Not really reliable
 
 def write_traj(x_chain: torch.Tensor, node_attr: torch.Tensor, node_mask: torch.Tensor,
                edge_attr: torch.Tensor, dir: str, file_names: list[str]) -> None:

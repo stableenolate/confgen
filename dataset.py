@@ -6,8 +6,6 @@ import os
 import utils
 import openbabel
 from openbabel import openbabel as ob
-import rdkit
-from rdkit import Chem
 
 ob.obErrorLog.SetOutputLevel(0) #Probably bad practice. To ignore Kekulize errors
 
@@ -61,7 +59,7 @@ class QM9Dataset(Dataset):
     def __len__(self) -> int:
         return len(self.file_paths)
     
-    def load_xyz_file(self, file: str) -> tuple[list[str], np.ndarray, np.ndarray, Chem.Mol]:
+    def load_xyz_file(self, file: str) -> tuple[list[str], np.ndarray, np.ndarray, ob.OBMol]:
         """
         parses xyz file to return atom types, coordinates, and charges,
         along with an OBMol object constructed from the xyz file
@@ -71,17 +69,13 @@ class QM9Dataset(Dataset):
             atoms: list of atom symbol [N,]
             coords: numpy array of positions [N, 3]
             chrages: numpy array of partial charges(mulliken) [N,]
-            mol: RDKit mol object constructed from xyz file
+            mol: OBMol object constructed from xyz file
         """
 
         conv = ob.OBConversion()
         conv.SetInFormat('xyz')
         mol = ob.OBMol()
         conv.ReadFile(mol, file)
-        conv.SetOutFormat('smi')
-        smi = conv.WriteString(mol).split()[0]
-
-        mol = Chem.MolFromSmiles(smi)
 
         with open(file, "r") as f:
             lines = f.readlines()
@@ -101,9 +95,9 @@ class QM9Dataset(Dataset):
 
         return atoms, np.array(coords, dtype=np.float32), np.array(charges, dtype=np.float32), mol
 
-    def parse_mol(self, mol: Chem.Mol) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    def parse_mol(self, mol: ob.OBMol) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
         """
-        parses RDKit mol object to get atom/bond aromaticity; bond order;
+        parses OBMol object to get atom/bond aromaticity; bond order;
         and atom degree, valency, and number
 
         mol(OBMol): OBMol object to be parsed
@@ -115,7 +109,7 @@ class QM9Dataset(Dataset):
             val: valency(sum of bond order) of each atom [N,]
             hyb: hybridization of each atom [N,]
         """
-        num_atoms = mol.GetNumAtoms(onlyExplicit=False)
+        num_atoms = mol.NumAtoms()
         atom_ar = np.zeros(num_atoms, dtype=np.long)
         bond_ar = np.zeros((num_atoms, num_atoms), dtype=np.long)
         order = np.zeros((num_atoms, num_atoms), dtype=np.float32)
